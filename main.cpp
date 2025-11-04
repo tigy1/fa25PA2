@@ -118,10 +118,29 @@ int buildEncodingTree(int nextFree) {
 
 // Step 4: Use an STL stack to generate codes
 void generateCodes(int root, string codes[]) {
-    // TODO:
     // Use stack<pair<int, string>> to simulate DFS traversal.
     // Left edge adds '0', right edge adds '1'.
     // Record code when a leaf node is reached.
+    stack<pair<int, string>> dfs;
+    dfs.push({root, ""});
+    while (!dfs.empty()) {
+        //traverses tree every loop
+        int idx = dfs.top().first;
+        string str = dfs.top().second;
+        dfs.pop();
+
+        //this means that the character has been found b/c they are child nodes w/ no children, so it uses the built up string
+        if (leftArr[idx] == -1 && rightArr[idx] == -1) {
+            char target = charArr[idx];
+            codes[target - 'a'] = str;
+        } else { //makes it so that the left node is popped/checked first and the list is first traversed along the left
+            if (rightArr[idx] != -1) {
+                dfs.push({idx, str + '1'});
+            } else {
+                dfs.push({idx, str + '0'});
+            }
+        }
+    }
 }
 
 // Step 5: Print table and encoded message
