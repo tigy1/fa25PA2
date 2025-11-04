@@ -130,6 +130,9 @@ void generateCodes(int root, string codes[]) {
 
         //this means that the character has been found b/c they are child nodes w/ no children, so it uses the built up string
         if (leftArr[idx] == -1 && rightArr[idx] == -1) {
+            if (str.empty()) {
+                str = "0";
+            }
             char target = charArr[idx];
             codes[target - 'a'] = str;
         } else { //makes it so that the left node is popped/checked first and the list is first traversed along the left
