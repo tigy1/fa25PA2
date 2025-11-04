@@ -33,7 +33,6 @@ int main() {
 
     // Step 3: Build encoding tree using your heap
     int root = buildEncodingTree(nextFree);
-
     // Step 4: Generate binary codes using an STL stack
     string codes[26];
     generateCodes(root, codes);
@@ -135,9 +134,10 @@ void generateCodes(int root, string codes[]) {
             codes[target - 'a'] = str;
         } else { //makes it so that the left node is popped/checked first and the list is first traversed along the left
             if (rightArr[idx] != -1) {
-                dfs.push({idx, str + '1'});
-            } else {
-                dfs.push({idx, str + '0'});
+                dfs.push({rightArr[idx], str + '1'}); //goes to right child
+            }
+            if (leftArr[idx] != -1){
+                dfs.push({leftArr[idx], str + '0'}); //goes to left child
             }
         }
     }
